@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ── PRIMARY SEO ── -->
+<title>GouvernAI — Runtime Guardrails for AI Agents | Risk Classification, Audit Trails & Dual Enforcement</title>
+<meta name="description" content="Open-source runtime guardrails for AI agents. Classify every action by risk tier (T1–T4), enforce proportional controls, block dangerous operations deterministically, and log a full audit trail. Dual enforcement: probabilistic skill layer + deterministic hooks. Framework-agnostic — shipped for Claude Code, with MCP, OpenAI Agents SDK, and LangGraph next.">
+<meta name="keywords" content="AI guardrails, AI agent safety, runtime guardrails, Claude Code plugin, AI governance, risk classification, audit trail, dual enforcement, AI security, agentic AI safety, credential protection, obfuscated command blocking, defense in depth, AI policy enforcement, GCC AI governance, MCP guardrails, agent risk management, LLM guardrails, operational safety">
+<meta name="author" content="Myr-Aya, MindXO">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="https://gouvernai.ai/">
+
+<!-- ── OPEN GRAPH (Facebook, LinkedIn, Discord, Slack, etc.) ── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GouvernAI">
+<meta property="og:title" content="GouvernAI — Runtime Guardrails for AI Agents">
+<meta property="og:description" content="Classify every AI agent action by risk tier. Enforce proportional controls. Block dangerous operations deterministically. Full audit trail. Open source, dual enforcement, framework-agnostic.">
+<meta property="og:url" content="https://gouvernai.ai/">
+<meta property="og:image" content="https://gouvernai.ai/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GouvernAI — Runtime guardrails for AI agents. 4-tier risk classification with dual enforcement.">
+<meta property="og:locale" content="en_US">
+
+<!-- ── TWITTER / X CARD ── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GouvernAI — Runtime Guardrails for AI Agents">
+<meta name="twitter:description" content="Open-source dual-enforcement guardrails for AI agents. Risk classification (T1–T4), proportional controls, deterministic blocking, full audit trail. Shipped for Claude Code.">
+<meta name="twitter:image" content="https://gouvernai.ai/og-image.png">
+<meta name="twitter:image:alt" content="GouvernAI — Runtime guardrails for AI agents">
+
+<!-- ── GEO TARGETING (Dubai / GCC) ── -->
+<meta name="geo.region" content="AE-DU">
+<meta name="geo.placename" content="Dubai">
+<meta name="geo.position" content="25.2048;55.2708">
+<meta name="ICBM" content="25.2048, 55.2708">
+<meta name="language" content="en">
+
+<!-- ── STRUCTURED DATA (JSON-LD) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GouvernAI",
+  "alternateName": "GouvernAI Claude Code Plugin",
+  "description": "Open-source runtime guardrails for AI agents. Classifies every sensitive action by risk tier, enforces proportional controls, blocks dangerous operations with hard constraints, and logs a full audit trail. Dual enforcement architecture: probabilistic skill layer + deterministic hooks.",
+  "url": "https://gouvernai.ai",
+  "applicationCategory": "DeveloperApplication",
+  "applicationSubCategory": "AI Safety & Governance",
+  "operatingSystem": "Cross-platform",
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "codeRepository": "https://github.com/Myr-Aya/GouvernAI-claude-code-plugin",
+  "softwareVersion": "0.1.0",
+  "releaseNotes": "First release: Claude Code plugin with dual enforcement (skill layer + PreToolUse hooks), 85 passing tests, 28 cataloged actions across 8 categories, 4-tier risk classification system.",
+  "programmingLanguage": "Python",
+  "author": {
+    "@type": "Person",
+    "name": "Myr-Aya",
+    "url": "https://github.com/Myr-Aya"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MindXO",
+    "url": "https://mind-xo.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Dubai",
+      "addressCountry": "AE"
+    },
+    "description": "AI governance infrastructure — translating AI policy frameworks into operational guardrails systems."
+  },
+  "keywords": ["AI guardrails", "AI agent safety", "runtime guardrails", "risk classification", "audit trail", "dual enforcement", "Claude Code plugin", "AI governance", "defense in depth", "credential protection"],
+  "featureList": [
+    "4-tier risk classification (T1–T4)",
+    "Dual enforcement: probabilistic + deterministic",
+    "28 cataloged actions across 8 categories",
+    "Proportional controls: notify / approve / halt",
+    "Deterministic blocking of obfuscated commands",
+    "Credential transmission interception",
+    "Full audit trail with guardrails_log.md",
+    "Persistent mode config (strict / relaxed / audit-only)",
+    "Escalation rules (bulk, unfamiliar, scope expansion)",
+    "85 passing hook unit tests",
+    "Zero dependencies"
+  ]
+}
+</script>
+
+<!-- ── ORGANIZATION SCHEMA ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MindXO",
+  "url": "https://mind-xo.com",
+  "logo": "https://mind-xo.com/logo.png",
+  "description": "AI governance infrastructure for regulated enterprises and government entities. Bridging the gap between AI policy frameworks and operational implementation.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Dubai",
+    "addressRegion": "Dubai",
+    "addressCountry": "AE"
+  },
+  "areaServed": [
+    {"@type": "Place", "name": "United Arab Emirates"},
+    {"@type": "Place", "name": "Gulf Cooperation Council (GCC)"},
+    {"@type": "Place", "name": "Middle East and North Africa"}
+  ],
+  "knowsAbout": ["AI Governance", "AI Safety", "Runtime Guardrails", "AI Policy Frameworks", "Risk Classification"],
+  "founder": {
+    "@type": "Person",
+    "name": "Myr-Aya"
+  }
+}
+</script>
+
+<!-- ── BREADCRUMB SCHEMA ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "GouvernAI",
+      "item": "https://gouvernai.ai/"
+    }
+  ]
+}
+</script>
+
+<!-- ── FAQ SCHEMA (aids featured snippets) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is GouvernAI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GouvernAI is an open-source runtime guardrails system for AI agents. It classifies every sensitive action by risk tier (T1–T4), enforces proportional controls (notify, approve, or halt), blocks dangerous operations deterministically, and logs a full audit trail. It uses dual enforcement: a probabilistic skill layer for nuanced risk classification and a deterministic hook layer for hard constraint blocking."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does dual enforcement work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The skill layer teaches the AI agent an 8-step gate process through structured instructions (SKILL.md). The agent reads, reasons, and classifies actions with judgment. The hook layer runs a Python script on every tool call that checks for obfuscated commands, credential transmission, catastrophic commands, and self-modification attempts. If a violation is detected, the hook blocks the action with exit code 2 — the agent cannot override it. Both layers are needed because skills are probabilistic (the agent might skip them) while hooks are deterministic (they run every time)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What platforms does GouvernAI support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GouvernAI currently ships as a Claude Code plugin (dual enforcement with hooks) and a standalone Claude skill (skill layer only). MCP server, OpenAI Agents SDK, and LangGraph/CrewAI adapters are on the roadmap. The architecture is designed to be framework-agnostic."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is GouvernAI a security boundary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. GouvernAI is an operational safety and governance layer — one layer in a defense-in-depth stack. It catches accidental destructive actions, enforces consistent approval workflows, and creates accountability through audit logging. It does not protect against sophisticated, determined adversaries. For production environments, complement it with network egress policies, secret vaults, sandboxed execution, and DLP monitoring."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- ── FONTS ── -->
+<link rel="alternate" hreflang="en" href="https://gouvernai.ai/">
+<link rel="alternate" hreflang="x-default" href="https://gouvernai.ai/">
+<meta name="theme-color" content="#1F3935">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #1F3935;
+    --green-800: #254642;
+    --green-700: #2A4D47;
+    --green-600: #335E58;
+    --green-500: #3A5550;
+    --mint-600: #2FD9A8;
+    --mint-500: #3EEEB9;
+    --mint-400: #62F0C8;
+    --mint-300: #8AF5D9;
+    --mint-200: #C9FAEC;
+    --coral-600: #E86666;
+    --coral-500: #FF7D7D;
+    --coral-400: #FF9A9A;
+    --coral-300: #FFB5B5;
+    --silver-300: #D1D5D8;
+    --silver-200: #E7E8E9;
+    --silver-100: #F4F5F6;
+    --white: #FFFFFF;
+    --text-primary: #1F3935;
+    --text-muted: #6B7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+    background: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--silver-200);
+    transition: all 0.3s ease;
+  }
+  nav.scrolled { background: rgba(255,255,255,0.95); box-shadow: 0 2px 24px rgba(31,57,53,0.06); }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--green-900);
+  }
+  .nav-logo .shield { font-size: 1.5rem; }
+  .nav-logo span {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--green-900); }
+
+  .nav-cta {
+    background: var(--green-900) !important;
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: all 0.25s ease !important;
+  }
+  .nav-cta:hover { background: var(--green-700) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(62,238,185,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,125,125,0.05) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--silver-200) 1px, transparent 1px),
+      linear-gradient(90deg, var(--silver-200) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 20%, transparent 70%);
+    z-index: 0;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--mint-200);
+    color: var(--green-800);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeSlideUp 0.6s ease-out both;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint-600);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--green-900);
+    margin-bottom: 1.5rem;
+    animation: fadeSlideUp 0.6s ease-out 0.1s both;
+  }
+  h1 .accent { color: var(--mint-600); }
+
+  .hero-sub {
+    font-size: 1.25rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeSlideUp 0.6s ease-out 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeSlideUp 0.6s ease-out 0.3s both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--green-900);
+    color: var(--white);
+  }
+  .btn-primary:hover { background: var(--green-700); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(31,57,53,0.2); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--green-900);
+    border: 1.5px solid var(--silver-300);
+  }
+  .btn-ghost:hover { border-color: var(--green-600); background: var(--silver-100); }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    animation: fadeSlideUp 0.6s ease-out 0.4s both;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .hero-stat .val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--green-900);
+  }
+  .hero-stat .val .unit { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+  .hero-stat .label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION DEFAULTS ── */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mint-600);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--green-900);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-desc {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works { background: var(--silver-100); }
+
+  .dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .layer-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem;
+    border: 1px solid var(--silver-200);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .layer-card:hover { border-color: var(--silver-300); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(31,57,53,0.06); }
+
+  .layer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+  .layer-card.skill::before { background: linear-gradient(90deg, var(--mint-500), var(--mint-300)); }
+  .layer-card.hook::before { background: linear-gradient(90deg, var(--coral-500), var(--coral-300)); }
+
+  .layer-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.25rem;
+  }
+  .layer-card.skill .layer-icon { background: var(--mint-200); }
+  .layer-card.hook .layer-icon { background: rgba(255,125,125,0.15); }
+
+  .layer-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--green-900);
+  }
+  .layer-card .layer-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .layer-card.skill .layer-type { color: var(--mint-600); }
+  .layer-card.hook .layer-type { color: var(--coral-500); }
+
+  .layer-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .layer-features {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .layer-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .layer-features li .check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    margin-top: 2px;
+  }
+  .layer-card.skill .check { background: var(--mint-200); color: var(--green-700); }
+  .layer-card.hook .check { background: rgba(255,125,125,0.15); color: var(--coral-600); }
+
+  /* ── TIERS ── */
+  .tiers-section { background: var(--green-900); color: var(--white); }
+  .tiers-section .section-label { color: var(--mint-400); }
+  .tiers-section h2 { color: var(--white); }
+  .tiers-section .section-desc { color: rgba(255,255,255,0.55); }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .tier-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+
+  .tier-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .tier-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .tier-color-bar {
+    width: 40px;
+    height: 3px;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+  .tier-1 .tier-color-bar { background: var(--mint-400); }
+  .tier-2 .tier-color-bar { background: #F5C542; }
+  .tier-3 .tier-color-bar { background: var(--coral-400); }
+  .tier-4 .tier-color-bar { background: #A78BFA; }
+
+  .tier-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.25rem;
+  }
+
+  .tier-action {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    display: inline-block;
+    line-height: 1.3;
+  }
+  .tier-1 .tier-action { background: rgba(62,238,185,0.1); color: var(--mint-400); }
+  .tier-2 .tier-action { background: rgba(245,197,66,0.1); color: #F5C542; }
+  .tier-3 .tier-action { background: rgba(255,125,125,0.1); color: var(--coral-400); }
+  .tier-4 .tier-action { background: rgba(167,139,250,0.1); color: #A78BFA; }
+
+  /* ── PROS & CONS ── */
+  .proscons { background: var(--silver-100); }
+
+  .proscons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .proscons-col h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--green-900);
+  }
+
+  .proscons-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .proscons-item {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--silver-200);
+    transition: all 0.25s ease;
+  }
+  .proscons-item:hover { border-color: var(--silver-300); transform: translateX(4px); }
+
+  .proscons-item .title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .proscons-item .title .icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .pros .proscons-item .title .icon { background: var(--mint-200); color: var(--green-700); }
+  .cons .proscons-item .title .icon { background: rgba(255,125,125,0.15); color: var(--coral-600); }
+
+  .proscons-item .desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-left: 1.9rem;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap-section { background: var(--green-900); color: var(--white); }
+  .roadmap-section .section-label { color: var(--mint-400); }
+  .roadmap-section h2 { color: var(--white); }
+  .roadmap-section .section-desc { color: rgba(255,255,255,0.55); }
+
+  .roadmap-timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    position: relative;
+  }
+  .roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    z-index: 0;
+  }
+
+  .roadmap-phase {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .roadmap-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    position: relative;
+  }
+  .roadmap-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid;
+    opacity: 0.3;
+  }
+  .roadmap-dot.active { background: var(--mint-500); }
+  .roadmap-dot.active::after { border-color: var(--mint-500); }
+  .roadmap-dot.upcoming { background: rgba(255,255,255,0.2); }
+  .roadmap-dot.upcoming::after { border-color: rgba(255,255,255,0.15); }
+
+  .roadmap-phase h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: var(--white);
+  }
+  .roadmap-phase .when {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    color: rgba(255,255,255,0.35);
+  }
+  .roadmap-phase.is-active .when { color: var(--mint-400); }
+
+  .roadmap-phase p {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.45);
+  }
+  .roadmap-phase.is-active p { color: rgba(255,255,255,0.6); }
+
+  .roadmap-frameworks {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .framework-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .framework-chip.shipped {
+    background: rgba(62,238,185,0.12);
+    color: var(--mint-400);
+    border: 1px solid rgba(62,238,185,0.2);
+  }
+  .framework-chip.planned {
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .framework-chip .chip-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .framework-chip.shipped .chip-dot { background: var(--mint-500); }
+  .framework-chip.planned .chip-dot { background: rgba(255,255,255,0.25); }
+
+  /* ── INSTALL ── */
+  .install-section { background: var(--white); }
+
+  .install-block {
+    background: var(--green-900);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .install-block::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(62,238,185,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .install-block h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .install-block p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .code-block {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+  }
+  .code-block code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--mint-400);
+    line-height: 1.7;
+  }
+  .code-block .comment { color: rgba(255,255,255,0.3); }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.5);
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-900);
+    color: rgba(255,255,255,0.4);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+  footer a {
+    color: var(--mint-400);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--mint-300); }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .dual-grid, .proscons-grid { grid-template-columns: 1fr; }
+    .tiers-grid { grid-template-columns: 1fr 1fr; }
+    .roadmap-timeline { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .roadmap-timeline::before { display: none; }
+    .hero-stat-row { gap: 1.5rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+  @media (max-width: 500px) {
+    .tiers-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <span class="shield">🛡️</span>
+    <span>GouvernAI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#tiers">Risk tiers</a>
+    <a href="#proscons">Pros &amp; Cons</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://github.com/Myr-Aya/GouvernAI-claude-code-plugin" class="nav-cta" target="_blank">GitHub &rarr;</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Open source &middot; First release: Claude Code plugin</div>
+    <h1>Runtime guardrails<br>for <span class="accent">any AI agent</span></h1>
+    <p class="hero-sub">An operational safety and governance layer that sits between your AI agent's decision to act and the action itself. Classify risk, enforce proportional controls, block dangerous operations, and log everything. One layer in a defense-in-depth stack — framework-agnostic by design, shipping first on Claude Code.</p>
+    <div class="hero-actions">
+      <a href="#install" class="btn btn-primary">Get started &rarr;</a>
+      <a href="#proscons" class="btn btn-ghost">See the tradeoffs</a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <div class="val">85<span class="unit">/85</span></div>
+        <div class="label">Hook tests passing</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">28</div>
+        <div class="label">Cataloged actions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">0</div>
+        <div class="label">Dependencies</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">4</div>
+        <div class="label">Risk tiers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-inner reveal">
+    <div class="section-label">Architecture</div>
+    <h2>Dual enforcement — because<br>one layer isn't enough</h2>
+    <p class="section-desc">GouvernAI uses two enforcement layers that adapt to each platform. The core architecture — probabilistic classification + deterministic blocking — is designed to work across any agent framework.</p>
+
+    <div class="dual-grid">
+      <div class="layer-card skill">
+        <div class="layer-icon">🧠</div>
+        <h3>Skill layer</h3>
+        <div class="layer-type">Probabilistic &middot; Works on any LLM</div>
+        <p>Structured instructions teach the agent an 8-step gate process. The agent reads, reasons, and classifies with judgment — handling nuanced decisions a regex can't. Adapts to each framework's skill/prompt format.</p>
+        <ul class="layer-features">
+          <li><span class="check">✓</span>4-tier risk classification (T1–T4)</li>
+          <li><span class="check">✓</span>Escalation rules (bulk, unfamiliar, scope expansion)</li>
+          <li><span class="check">✓</span>Pre-approval with safety checks</li>
+          <li><span class="check">✓</span>Sequential pattern detection</li>
+          <li><span class="check">✓</span>Mode-aware controls (strict / relaxed / audit)</li>
+        </ul>
+      </div>
+      <div class="layer-card hook">
+        <div class="layer-icon">🔒</div>
+        <h3>Enforcement layer</h3>
+        <div class="layer-type">Deterministic &middot; Platform-specific hooks</div>
+        <p>Hard constraint scripts run on every tool call. If a violation is detected, the action is blocked — the agent cannot override it. Implemented as PreToolUse hooks on Claude Code, with middleware/guardrails adapters planned for other frameworks.</p>
+        <ul class="layer-features">
+          <li><span class="check">✗</span>Obfuscated command blocking (base64, eval, hex)</li>
+          <li><span class="check">✗</span>Credential transmission interception</li>
+          <li><span class="check">✗</span>Catastrophic command prevention (rm -rf /)</li>
+          <li><span class="check">✗</span>Self-modification protection</li>
+          <li><span class="check">✗</span>Credential-in-file-write detection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RISK TIERS -->
+<section class="tiers-section" id="tiers">
+  <div class="section-inner reveal">
+    <div class="section-label">Classification</div>
+    <h2>Four tiers, proportional controls</h2>
+    <p class="section-desc">Every action gets the same control at its tier. No per-action overrides. Universal, predictable, auditable.</p>
+
+    <div class="tiers-grid">
+      <div class="tier-card tier-1">
+        <div class="tier-number">Tier 1</div>
+        <div class="tier-name">Routine</div>
+        <div class="tier-color-bar"></div>
+        <div class="tier-desc">Reads, drafts, known URLs. Zero side effects. Excluded from the gate entirely — no overhead.</div>
+        <div class="tier-action">~60% of actions → zero overhead</div>
+      </div>
+      <div class="tier-card tier-2">
+        <div class="tier-number">Tier 2</div>
+        <div class="tier-name">Standard</div>
+        <div class="tier-color-bar"></div>
+        <div class="tier-desc">File writes, git commits, authenticated reads. Notify and proceed unless objected.</div>
+        <div class="tier-action">🛡️ Notify → proceed</div>
+      </div>
+      <div class="tier-card tier-3">
+        <div class="tier-number">Tier 3</div>
+        <div class="tier-name">Elevated</div>
+        <div class="tier-color-bar"></div>
+        <div class="tier-desc">Email, config changes, npm install, curl. Pause for explicit user approval.</div>
+        <div class="tier-action">🛡️ Pause → approve?</div>
+      </div>
+      <div class="tier-card tier-4">
+        <div class="tier-number">Tier 4</div>
+        <div class="tier-name">Critical</div>
+        <div class="tier-color-bar"></div>
+        <div class="tier-desc">Sudo, credential transmit, purchases, public posts. Full stop with risk assessment.</div>
+        <div class="tier-action">🛡️ Full stop → warn → approve?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROS & CONS -->
+<section class="proscons" id="proscons">
+  <div class="section-inner reveal">
+    <div class="section-label">Honest assessment</div>
+    <h2>What you're getting —<br>and what you're not</h2>
+    <p class="section-desc">We publish our threat model openly. GouvernAI is one layer in a defense-in-depth stack — not a security boundary. As the 2026 International AI Safety Report recommends: multiple safeguards compensating for weaknesses in any single control.</p>
+
+    <div class="proscons-grid">
+      <div class="proscons-col pros">
+        <h3><span style="font-size:1.2rem;">✦</span> Strengths</h3>
+        <ul class="proscons-list">
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Dual enforcement</div>
+            <div class="desc">Probabilistic skill layer for nuanced risk classification + deterministic hooks that physically block violations. Neither alone is sufficient.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Optimized for minimal token usage</div>
+            <div class="desc">Tier 1 actions (reads, drafts — ~60% of typical usage) are excluded from the gate entirely. Reference files are loaded on demand and cached. Gate output is compressed into single messages. Formal cost analysis coming soon.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Universal control table</div>
+            <div class="desc">Controls depend only on tier × mode. No per-action overrides, no special cases. MECE — predictable, auditable, no surprises.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Proportional, not binary</div>
+            <div class="desc">4-tier system with escalation rules. Reading a file? Invisible. Writing config? Approval required. Sending credentials externally? Hard block.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Full audit trail</div>
+            <div class="desc">Every gated action logged with timestamp, tier, mode, outcome, escalation reason. The log is the real enforcement mechanism — accountability after the fact.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Persistent mode config</div>
+            <div class="desc">Mode changes survive context resets and sessions via guardrails-mode.json. Strict, relaxed, audit-only — set once, forget.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Honest threat model</div>
+            <div class="desc">Published what it catches and what it doesn't. Known hook bypass gaps are documented as test cases. No security theater.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Zero config install</div>
+            <div class="desc">One command install, automatic activation. No environment variables to set, no config files to write. Works out of the box.</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="proscons-col cons">
+        <h3><span style="font-size:1.2rem;">◆</span> Limitations</h3>
+        <ul class="proscons-list">
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Not a security boundary</div>
+            <div class="desc">Catches accidental destructive actions, enforces consistent approval workflows, and creates accountability through audit logging. Does not protect against sophisticated adversaries. Complement with network egress policies, secret vaults, sandboxed execution, and DLP monitoring.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Skill layer is probabilistic</div>
+            <div class="desc">Claude uses judgment about when to apply the skill. On complex tasks, it might skip classification. The hook layer catches hard violations, but nuanced risk decisions are not guaranteed.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> MCP tools bypass hooks</div>
+            <div class="desc">PreToolUse hooks only fire on Bash, Write, Edit, and Read. MCP server actions have no deterministic enforcement — only the probabilistic skill layer applies.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Multi-step exfiltration gaps</div>
+            <div class="desc">Credentials staged in variables across separate commands, fragmented extraction, or exfiltration disguised as legitimate work can bypass both layers.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Model-dependent compliance</div>
+            <div class="desc">Tested informally on Claude Sonnet 4.6 (9/10 correct in Scenario A, 1 known low-risk issue accepted). Smaller models like Haiku may have lower compliance rates. Cross-model testing is ongoing.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> First release is Claude Code only</div>
+            <div class="desc">The dual-enforcement architecture is designed cross-platform, but the first shipping release targets Claude Code. MCP server, OpenAI Agents SDK, and LangGraph/CrewAI adapters are on the roadmap.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Hook adds ~10ms per call</div>
+            <div class="desc">The Python enforcement script runs on every Bash/Write/Edit tool call. Lightweight but not zero. Noticeable in extremely high-throughput scenarios.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Unix/Bash patterns only</div>
+            <div class="desc">Hook regex patterns target Bash syntax. PowerShell equivalents (Get-Content, Invoke-WebRequest, Remove-Item) are not covered. Low risk since Claude Code uses Bash on all platforms.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✗</span> Prompt injection risk</div>
+            <div class="desc">If an attacker convinces the model to ignore SKILL.md via prompt injection, the skill layer is bypassed. The hook layer still blocks hard constraints, but tier classification is lost.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap-section" id="roadmap">
+  <div class="section-inner reveal">
+    <div class="section-label">Platform roadmap</div>
+    <h2>One architecture,<br>every agent framework</h2>
+    <p class="section-desc">GouvernAI's dual-enforcement pattern — probabilistic classification + deterministic blocking — adapts to each platform's native extension points.</p>
+
+    <div class="roadmap-timeline">
+      <div class="roadmap-phase is-active">
+        <div class="roadmap-dot active"></div>
+        <h4>Claude Code Plugin</h4>
+        <div class="when">Shipped &middot; v0.1.0</div>
+        <p>Full plugin with SKILL.md + PreToolUse hooks. Dual enforcement. 85 tests passing.</p>
+      </div>
+      <div class="roadmap-phase is-active">
+        <div class="roadmap-dot active"></div>
+        <h4>Claude Skill</h4>
+        <div class="when">Shipped</div>
+        <p>Standalone skill layer — drop SKILL.md into any Claude project. Probabilistic classification, no hooks required.</p>
+      </div>
+      <div class="roadmap-phase">
+        <div class="roadmap-dot upcoming"></div>
+        <h4>MCP Server</h4>
+        <div class="when">Next up</div>
+        <p>Standalone MCP server. Guardrails as middleware for any MCP-compatible agent or IDE.</p>
+      </div>
+      <div class="roadmap-phase">
+        <div class="roadmap-dot upcoming"></div>
+        <h4>OpenAI Agents SDK</h4>
+        <div class="when">Planned</div>
+        <p>Python guardrails hooks for the OpenAI Agents SDK. Same tier system, same controls.</p>
+      </div>
+      <div class="roadmap-phase">
+        <div class="roadmap-dot upcoming"></div>
+        <h4>LangGraph / CrewAI</h4>
+        <div class="when">Planned</div>
+        <p>Node-level guardrails for multi-agent orchestration frameworks.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-frameworks">
+      <div class="framework-chip shipped"><span class="chip-dot"></span> Claude Code Plugin</div>
+      <div class="framework-chip shipped"><span class="chip-dot"></span> Claude Skill</div>
+      <div class="framework-chip planned"><span class="chip-dot"></span> MCP Server</div>
+      <div class="framework-chip planned"><span class="chip-dot"></span> OpenAI Agents SDK</div>
+      <div class="framework-chip planned"><span class="chip-dot"></span> LangGraph</div>
+      <div class="framework-chip planned"><span class="chip-dot"></span> CrewAI</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install-section" id="install">
+  <div class="section-inner reveal">
+    <div class="section-label">Get started</div>
+    <h2>Two ways to start</h2>
+    <p class="section-desc">Full dual-enforcement plugin or lightweight skill-only — pick what fits your workflow.</p>
+
+    <div class="install-block">
+      <h3>Claude Code Plugin <span style="font-size:0.75rem;background:rgba(62,238,185,0.15);color:var(--mint-400);padding:0.2rem 0.6rem;border-radius:100px;margin-left:0.5rem;vertical-align:middle;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em;">DUAL ENFORCEMENT</span></h3>
+      <p>Full plugin — skill layer + deterministic hooks. Blocks dangerous operations even if the model skips classification.</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code><span class="comment"># Add the marketplace</span><br>claude plugin marketplace add Myr-Aya/GouvernAI-claude-code-plugin<br><br><span class="comment"># Install the plugin</span><br>claude plugin install gouvernai@mindxo</code>
+      </div>
+    </div>
+
+    <div class="install-block" style="margin-top:1.5rem;">
+      <h3>Claude Skill <span style="font-size:0.75rem;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);padding:0.2rem 0.6rem;border-radius:100px;margin-left:0.5rem;vertical-align:middle;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em;">SKILL LAYER ONLY</span></h3>
+      <p>Standalone SKILL.md — drop into any Claude project for probabilistic classification and audit logging. No hooks, no dependencies.</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code><span class="comment"># Clone the skill repo</span><br>git clone https://github.com/Myr-Aya/gouvernai-skill.git</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span>🛡️ GouvernAI</span> &middot; MIT License &middot; Built by <a href="https://github.com/Myr-Aya" target="_blank">Myr-Aya</a>, <a href="https://mind-xo.com" target="_blank">MindXO</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/Myr-Aya/GouvernAI-claude-code-plugin" target="_blank">GitHub</a>
+    <a href="https://mind-xo.com" target="_blank">MindXO</a>
+    <a href="#proscons">Threat model</a>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Copy button
+  function copyCode(btn) {
+    const code = btn.parentElement.querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  }
+</script>
+
+</body>
+</html>
