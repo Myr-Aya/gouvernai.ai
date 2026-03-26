@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- ── PRIMARY SEO ── -->
-<title>GouvernAI — Runtime Guardrails for AI Agents | Risk Classification, Audit Trails & Dual Enforcement</title>
-<meta name="description" content="Open-source runtime guardrails for AI agents. Classify every action by risk tier (T1–T4), enforce proportional controls, block dangerous operations deterministically, and log a full audit trail. Dual enforcement: probabilistic skill layer + deterministic hooks. Framework-agnostic — shipped for Claude Code, with MCP, OpenAI Agents SDK, and LangGraph next.">
+<title>GouvernAI — Runtime Guardrails for AI Agents | Permissive Where Risk Is Low. Conservative Where It Matters.</title>
+<meta name="description" content="Open-source runtime guardrails that preserve your flow state. Reads, drafts, and routine writes flow through with zero friction. Guardrails only activate when actions carry real risk. Dual enforcement: probabilistic skill layer + deterministic hooks. 4-tier risk classification, proportional controls, full audit trail. Framework-agnostic — shipped for Claude Code.">
 <meta name="keywords" content="AI guardrails, AI agent safety, runtime guardrails, Claude Code plugin, AI governance, risk classification, audit trail, dual enforcement, AI security, agentic AI safety, credential protection, obfuscated command blocking, defense in depth, AI policy enforcement, GCC AI governance, MCP guardrails, agent risk management, LLM guardrails, operational safety">
 <meta name="author" content="Myr-Aya, MindXO">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -15,8 +15,8 @@
 <!-- ── OPEN GRAPH (Facebook, LinkedIn, Discord, Slack, etc.) ── -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GouvernAI">
-<meta property="og:title" content="GouvernAI — Runtime Guardrails for AI Agents">
-<meta property="og:description" content="Classify every AI agent action by risk tier. Enforce proportional controls. Block dangerous operations deterministically. Full audit trail. Open source, dual enforcement, framework-agnostic.">
+<meta property="og:title" content="GouvernAI — Permissive Where Risk Is Low. Conservative Where It Matters.">
+<meta property="og:description" content="Runtime guardrails that preserve your flow state. ~60% of agent actions flow through invisibly. Guardrails activate only when risk is real. Dual enforcement, 4-tier classification, full audit trail. Open source.">
 <meta property="og:url" content="https://gouvernai.ai/">
 <meta property="og:image" content="https://gouvernai.ai/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -26,8 +26,8 @@
 
 <!-- ── TWITTER / X CARD ── -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GouvernAI — Runtime Guardrails for AI Agents">
-<meta name="twitter:description" content="Open-source dual-enforcement guardrails for AI agents. Risk classification (T1–T4), proportional controls, deterministic blocking, full audit trail. Shipped for Claude Code.">
+<meta name="twitter:title" content="GouvernAI — Permissive Where Risk Is Low. Conservative Where It Matters.">
+<meta name="twitter:description" content="Runtime guardrails that preserve your flow state. ~60% of agent actions flow through invisibly. Dual enforcement, 4-tier classification, full audit trail. Open source, shipped for Claude Code.">
 <meta name="twitter:image" content="https://gouvernai.ai/og-image.png">
 <meta name="twitter:image:alt" content="GouvernAI — Runtime guardrails for AI agents">
 
@@ -626,6 +626,47 @@
   .tier-3 .tier-action { background: rgba(255,125,125,0.1); color: var(--coral-400); }
   .tier-4 .tier-action { background: rgba(167,139,250,0.1); color: #A78BFA; }
 
+  /* ── AUTO MODE COMPARISON ── */
+  .automode-section { background: var(--white); }
+
+  .automode-table {
+    margin-top: 3rem;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--silver-200);
+  }
+  .automode-table th {
+    background: var(--green-900);
+    color: var(--white);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  .automode-table td {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--silver-200);
+    line-height: 1.5;
+  }
+  .automode-table tr:last-child td { border-bottom: none; }
+  .automode-table tr:nth-child(even) td { background: var(--silver-100); }
+  .automode-table td:first-child {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .automode-table td:last-child {
+    color: var(--green-800);
+    font-weight: 500;
+  }
+
   /* ── PROS & CONS ── */
   .proscons { background: var(--silver-100); }
 
@@ -935,8 +976,8 @@
   <div class="hero-grid"></div>
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span> Open source &middot; First release: Claude Code plugin</div>
-    <h1>Runtime guardrails<br>for <span class="accent">any AI agent</span></h1>
-    <p class="hero-sub">An operational safety and governance layer that sits between your AI agent's decision to act and the action itself. Classify risk, enforce proportional controls, block dangerous operations, and log everything. One layer in a defense-in-depth stack — framework-agnostic by design, shipping first on Claude Code.</p>
+    <h1>Permissive where risk is low.<br><span class="accent">Conservative where it matters.</span></h1>
+    <p class="hero-sub">Runtime guardrails that preserve your flow state. Reads, drafts, and routine writes flow through with zero friction. Guardrails only activate when actions carry real risk: credential transmission, bulk deletions, unfamiliar endpoints, scope expansion. Framework-agnostic by design, shipping first on Claude Code.</p>
     <div class="hero-actions">
       <a href="#install" class="btn btn-primary">Get started &rarr;</a>
       <a href="#proscons" class="btn btn-ghost">See the tradeoffs</a>
@@ -1004,39 +1045,85 @@
 <section class="tiers-section" id="tiers">
   <div class="section-inner reveal">
     <div class="section-label">Classification</div>
-    <h2>Four tiers, proportional controls</h2>
-    <p class="section-desc">Every action gets the same control at its tier. No per-action overrides. Universal, predictable, auditable.</p>
+    <h2>Invisible everywhere else</h2>
+    <p class="section-desc">Most of the time, you won't notice GouvernAI is running. ~60% of typical agent actions are excluded from the gate. When risk is real, it steps in proportionally.</p>
 
     <div class="tiers-grid">
       <div class="tier-card tier-1">
         <div class="tier-number">Tier 1</div>
         <div class="tier-name">Routine</div>
         <div class="tier-color-bar"></div>
-        <div class="tier-desc">Reads, drafts, known URLs. Zero side effects. Excluded from the gate entirely — no overhead.</div>
-        <div class="tier-action">~60% of actions → zero overhead</div>
+        <div class="tier-desc">Reads, drafts, git status, navigation. Invisible. Flow state preserved.</div>
+        <div class="tier-action">~60% of actions → zero friction</div>
       </div>
       <div class="tier-card tier-2">
         <div class="tier-number">Tier 2</div>
         <div class="tier-name">Standard</div>
         <div class="tier-color-bar"></div>
-        <div class="tier-desc">File writes, git commits, authenticated reads. Notify and proceed unless objected.</div>
-        <div class="tier-action">🛡️ Notify → proceed</div>
+        <div class="tier-desc">File writes, git commit. Brief notification, keeps going.</div>
+        <div class="tier-action">🛡️ Brief notice → keeps going</div>
       </div>
       <div class="tier-card tier-3">
         <div class="tier-number">Tier 3</div>
         <div class="tier-name">Elevated</div>
         <div class="tier-color-bar"></div>
-        <div class="tier-desc">Email, config changes, npm install, curl. Pause for explicit user approval.</div>
-        <div class="tier-action">🛡️ Pause → approve?</div>
+        <div class="tier-desc">npm install, curl, email, config changes. Pauses for approval — only when consequences are real.</div>
+        <div class="tier-action">🛡️ Pauses when it matters</div>
       </div>
       <div class="tier-card tier-4">
         <div class="tier-number">Tier 4</div>
         <div class="tier-name">Critical</div>
         <div class="tier-color-bar"></div>
-        <div class="tier-desc">Sudo, credential transmit, purchases, public posts. Full stop with risk assessment.</div>
-        <div class="tier-action">🛡️ Full stop → warn → approve?</div>
+        <div class="tier-desc">Sudo, credential transmit, bulk delete, purchases. Full stop with risk assessment — because it should.</div>
+        <div class="tier-action">🛡️ Full stop — because it should</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- COMPLEMENTS AUTO MODE -->
+<section class="automode-section" id="automode">
+  <div class="section-inner reveal">
+    <div class="section-label">Claude Code integration</div>
+    <h2>Complements auto mode,<br>doesn't replace it</h2>
+    <p class="section-desc">PreToolUse hooks run before the auto mode classifier — GouvernAI acts as a first pass. Here's what it adds on top.</p>
+
+    <table class="automode-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Auto mode</th>
+          <th>GouvernAI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Controls</td>
+          <td>Binary allow/block</td>
+          <td>4-tier proportional controls</td>
+        </tr>
+        <tr>
+          <td>Policy</td>
+          <td>Opaque classifier</td>
+          <td>Transparent, editable policy files you own</td>
+        </tr>
+        <tr>
+          <td>Audit</td>
+          <td>No audit trail</td>
+          <td>Append-only log with tier, escalation, outcome</td>
+        </tr>
+        <tr>
+          <td>Modes</td>
+          <td>No configurable modes</td>
+          <td>strict / relaxed / audit-only, persistent across sessions</td>
+        </tr>
+        <tr>
+          <td>Escalation</td>
+          <td>No escalation rules</td>
+          <td>Unfamiliar targets, bulk ops, scope expansion, chained actions</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -1064,8 +1151,8 @@
             <div class="desc">Controls depend only on tier × mode. No per-action overrides, no special cases. MECE — predictable, auditable, no surprises.</div>
           </li>
           <li class="proscons-item">
-            <div class="title"><span class="icon">✓</span> Proportional, not binary</div>
-            <div class="desc">4-tier system with escalation rules. Reading a file? Invisible. Writing config? Approval required. Sending credentials externally? Hard block.</div>
+            <div class="title"><span class="icon">✓</span> Preserves flow state</div>
+            <div class="desc">~60% of agent actions are invisible — reads, drafts, navigation excluded entirely. T2 shows a brief notice and keeps going. Guardrails only interrupt when consequences are real.</div>
           </li>
           <li class="proscons-item">
             <div class="title"><span class="icon">✓</span> Full audit trail</div>
@@ -1078,6 +1165,10 @@
           <li class="proscons-item">
             <div class="title"><span class="icon">✓</span> Honest threat model</div>
             <div class="desc">Published what it catches and what it doesn't. Known hook bypass gaps are documented as test cases. No security theater.</div>
+          </li>
+          <li class="proscons-item">
+            <div class="title"><span class="icon">✓</span> Complements Claude Code auto mode</div>
+            <div class="desc">Hooks run before the auto mode classifier. Adds proportional controls, transparent editable policies, persistent modes, escalation rules, and audit trail on top of the built-in binary allow/block.</div>
           </li>
           <li class="proscons-item">
             <div class="title"><span class="icon">✓</span> Zero config install</div>
