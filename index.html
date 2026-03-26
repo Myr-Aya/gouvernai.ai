@@ -560,7 +560,7 @@
   .tiers-section { background: var(--green-900); color: var(--white); }
   .tiers-section .section-label { color: var(--mint-400); }
   .tiers-section h2 { color: var(--white); }
-  .tiers-section .section-desc { color: rgba(255,255,255,0.55); }
+  .tiers-section .section-desc { color: rgba(255,255,255,0.7); }
 
   .tiers-grid {
     display: grid;
@@ -609,7 +609,7 @@
   .tier-desc {
     font-size: 0.85rem;
     line-height: 1.6;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.65);
     margin-bottom: 1.25rem;
   }
 
@@ -625,6 +625,70 @@
   .tier-2 .tier-action { background: rgba(245,197,66,0.1); color: #F5C542; }
   .tier-3 .tier-action { background: rgba(255,125,125,0.1); color: var(--coral-400); }
   .tier-4 .tier-action { background: rgba(167,139,250,0.1); color: #A78BFA; }
+
+  /* ── SCREENSHOTS ── */
+  .screenshots-section { background: var(--silver-100); }
+
+  .screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .screenshot-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--silver-200);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .screenshot-card:hover { border-color: var(--silver-300); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(31,57,53,0.06); }
+  .screenshot-card.featured {
+    grid-column: 1 / -1;
+  }
+
+  .screenshot-card img {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid var(--silver-200);
+  }
+
+  .screenshot-caption {
+    padding: 1rem 1.25rem;
+  }
+  .screenshot-caption .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .tag-t2 { background: rgba(245,197,66,0.15); color: #B8860B; }
+  .tag-blocked { background: rgba(255,125,125,0.15); color: var(--coral-600); }
+  .tag-status { background: var(--mint-200); color: var(--green-700); }
+  .tag-log { background: rgba(167,139,250,0.12); color: #7C3AED; }
+
+  .screenshot-caption h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+  }
+  .screenshot-caption p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  @media (max-width: 900px) {
+    .screenshots-grid { grid-template-columns: 1fr; }
+    .screenshot-card.featured { grid-column: auto; }
+  }
 
   /* ── AUTO MODE COMPARISON ── */
   .automode-section { background: var(--white); }
@@ -736,7 +800,7 @@
   .roadmap-section { background: var(--green-900); color: var(--white); }
   .roadmap-section .section-label { color: var(--mint-400); }
   .roadmap-section h2 { color: var(--white); }
-  .roadmap-section .section-desc { color: rgba(255,255,255,0.55); }
+  .roadmap-section .section-desc { color: rgba(255,255,255,0.7); }
 
   .roadmap-timeline {
     display: grid;
@@ -795,16 +859,16 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: 0.75rem;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.5);
   }
   .roadmap-phase.is-active .when { color: var(--mint-400); }
 
   .roadmap-phase p {
     font-size: 0.85rem;
     line-height: 1.55;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.6);
   }
-  .roadmap-phase.is-active p { color: rgba(255,255,255,0.6); }
+  .roadmap-phase.is-active p { color: rgba(255,255,255,0.75); }
 
   .roadmap-frameworks {
     display: flex;
@@ -830,8 +894,8 @@
   }
   .framework-chip.planned {
     background: rgba(255,255,255,0.04);
-    color: rgba(255,255,255,0.4);
-    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.12);
   }
   .framework-chip .chip-dot {
     width: 6px; height: 6px; border-radius: 50%;
@@ -868,7 +932,7 @@
     margin-bottom: 0.5rem;
   }
   .install-block p {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.65);
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
   }
@@ -886,7 +950,7 @@
     color: var(--mint-400);
     line-height: 1.7;
   }
-  .code-block .comment { color: rgba(255,255,255,0.3); }
+  .code-block .comment { color: rgba(255,255,255,0.5); }
 
   .copy-btn {
     position: absolute;
@@ -894,7 +958,7 @@
     right: 0.75rem;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.65);
     padding: 0.35rem 0.7rem;
     border-radius: 6px;
     font-size: 0.7rem;
@@ -907,9 +971,8 @@
   /* ── FOOTER ── */
   footer {
     background: var(--green-900);
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.6);
     padding: 3rem;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 0.85rem;
@@ -976,8 +1039,8 @@
   <div class="hero-grid"></div>
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span> Open source &middot; First release: Claude Code plugin</div>
-    <h1>Permissive where risk is low.<br><span class="accent">Conservative where it matters.</span></h1>
-    <p class="hero-sub">Runtime guardrails that preserve your flow state. Reads, drafts, and routine writes flow through with zero friction. Guardrails only activate when actions carry real risk: credential transmission, bulk deletions, unfamiliar endpoints, scope expansion. Framework-agnostic by design, shipping first on Claude Code.</p>
+    <h1>Achieve AI-agent flow state.<br><span class="accent">Without losing control.</span></h1>
+    <p class="hero-sub">GouvernAI lets your AI agent skip permissions for low-risk and pre-approved actions, enforces guardrails only when risk is real, and keeps a background audit log — all without disrupting your flow. Complements Claude's native auto mode with proportional controls, transparent policies, and persistent escalation rules. Available as a Claude Code plugin and Cowork skill on any plan.</p>
     <div class="hero-actions">
       <a href="#install" class="btn btn-primary">Get started &rarr;</a>
       <a href="#proscons" class="btn btn-ghost">See the tradeoffs</a>
@@ -1077,6 +1140,73 @@
         <div class="tier-desc">Sudo, credential transmit, bulk delete, purchases. Full stop with risk assessment — because it should.</div>
         <div class="tier-action">🛡️ Full stop — because it should</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section class="screenshots-section" id="screenshots">
+  <div class="section-inner reveal">
+    <div class="section-label">In action</div>
+    <h2>See it working</h2>
+    <p class="section-desc">Real screenshots from Claude Code sessions. This is what GouvernAI looks like when it's running.</p>
+
+    <div class="screenshots-grid">
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/t2-notify.png" alt="GouvernAI Tier 2 notification — file write proceeds with brief notice" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-t2">Tier 2</span>
+          <h4>Notify and proceed</h4>
+          <p>File write in the workspace. Brief notification, keeps going. No interruption to your flow.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/blocked-obfuscated.png" alt="GouvernAI hard block — obfuscated base64-to-bash command detected and blocked" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-blocked">Blocked</span>
+          <h4>Obfuscated command — hard block</h4>
+          <p>Base64-to-bash pipe detected and blocked by the hook layer. No override possible, even if Claude skips the skill.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/blocked-credential-in-file.png" alt="GouvernAI hard block — API key detected in file write" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-blocked">Blocked</span>
+          <h4>Credential hardcoded in file</h4>
+          <p>API key detected in a file write. Shows what was caught, explains the risk, suggests alternatives.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/blocked-self-modification.png" alt="GouvernAI hard block — attempt to edit SKILL.md blocked" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-blocked">Blocked</span>
+          <h4>Self-modification attempt</h4>
+          <p>Attempt to edit SKILL.md to remove the gate. Blocked with explanation and alternatives.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/guardrails-status.png" alt="GouvernAI session status — mode, tier distribution, approval counts" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-status">Status</span>
+          <h4>/guardrails — Session overview</h4>
+          <p>Current mode, tier distribution, approval and denial counts at a glance.</p>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="assets/screenshots/audit-log.png" alt="GouvernAI audit log — full session trail with tier, outcome, escalation" loading="lazy">
+        <div class="screenshot-caption">
+          <span class="tag tag-log">Audit</span>
+          <h4>Background audit log</h4>
+          <p>Full session trail with every gated action — tier, outcome, and escalation reason. Logged silently, reviewed on demand.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1286,26 +1416,37 @@
 
       <div class="code-block">
         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        <code><span class="comment"># Add the marketplace</span><br>claude plugin marketplace add Myr-Aya/GouvernAI-claude-code-plugin<br><br><span class="comment"># Install the plugin</span><br>claude plugin install gouvernai@mindxo</code>
+        <code><span class="comment"># Add the marketplace</span><br>claude plugin marketplace add Myr-Aya/GouvernAI-claude-code-plugin<br><br><span class="comment"># Then install the plugin</span><br>claude plugin install gouvernai@mindxo</code>
       </div>
+      <p style="margin-top:1rem;font-size:0.8rem;color:rgba(255,255,255,0.6);">From Desktop app: Settings → Plugins → Browse → search "gouvernai" → Install</p>
     </div>
 
     <div class="install-block" style="margin-top:1.5rem;">
       <h3>Claude Skill <span style="font-size:0.75rem;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);padding:0.2rem 0.6rem;border-radius:100px;margin-left:0.5rem;vertical-align:middle;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em;">SKILL LAYER ONLY</span></h3>
-      <p>Standalone SKILL.md — drop into any Claude project for probabilistic classification and audit logging. No hooks, no dependencies.</p>
+      <p>Standalone skill — drop into any Claude project or Cowork for probabilistic classification and audit logging. No hooks, no dependencies.</p>
 
       <div class="code-block">
         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        <code><span class="comment"># Clone the skill repo</span><br>git clone https://github.com/Myr-Aya/gouvernai-skill.git</code>
+        <code><span class="comment"># Add the marketplace</span><br>claude plugin marketplace add Myr-Aya/GouvernAI-claude-code-plugin<br><br><span class="comment"># Then install the skill</span><br>claude plugin install gouvernai-skill@mindxo</code>
       </div>
+      <p style="margin-top:1rem;font-size:0.8rem;color:rgba(255,255,255,0.6);">From Desktop app: Settings → Plugins → Browse → search "gouvernai-skill" → Install</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div>
-    <span>🛡️ GouvernAI</span> &middot; MIT License &middot; Built by <a href="https://github.com/Myr-Aya" target="_blank">Myr-Aya</a>, <a href="https://mind-xo.com" target="_blank">MindXO</a>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+    <div>
+      <span>🛡️ GouvernAI</span> &middot; MIT License &middot; Built by <a href="https://github.com/Myr-Aya" target="_blank">Myr-Aya</a>
+    </div>
+    <a href="https://mind-xo.com" target="_blank" style="display:inline-block;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+      <svg width="120" height="51" viewBox="0 0 2635 1121" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M91.4 837V277H253.8L376.2 779.4H389L511.4 277H673.8V837H589.8V337.8H577L455.4 837H309.8L188.2 337.8H175.4V837H91.4ZM793.019 837V442.6H875.419V837H793.019ZM834.619 389C818.619 389 805.019 383.933 793.819 373.8C783.152 363.133 777.819 349.533 777.819 333C777.819 316.467 783.152 303.133 793.819 293C805.019 282.333 818.619 277 834.619 277C851.152 277 864.752 282.333 875.419 293C886.085 303.133 891.419 316.467 891.419 333C891.419 349.533 886.085 363.133 875.419 373.8C864.752 383.933 851.152 389 834.619 389ZM997.706 837V442.6H1078.51V501.8H1091.31C1098.77 485.8 1112.11 470.867 1131.31 457C1150.51 443.133 1179.04 436.2 1216.91 436.2C1246.77 436.2 1273.17 442.867 1296.11 456.2C1319.57 469.533 1337.97 488.467 1351.31 513C1364.64 537 1371.31 566.067 1371.31 600.2V837H1288.91V606.6C1288.91 572.467 1280.37 547.4 1263.31 531.4C1246.24 514.867 1222.77 506.6 1192.91 506.6C1158.77 506.6 1131.31 517.8 1110.51 540.2C1090.24 562.6 1080.11 595.133 1080.11 637.8V837H997.706ZM1653.09 848.2C1620.56 848.2 1590.43 840.2 1562.69 824.2C1534.96 808.2 1512.56 785.267 1495.49 755.4C1478.96 725 1470.69 688.467 1470.69 645.8V633.8C1470.69 591.667 1478.96 555.4 1495.49 525C1512.03 494.6 1534.16 471.4 1561.89 455.4C1589.63 439.4 1620.03 431.4 1653.09 431.4C1678.69 431.4 1700.03 434.6 1717.09 441C1734.69 447.4 1749.09 455.667 1760.29 465.8C1771.49 475.4 1780.03 485.533 1785.89 496.2H1798.69V277H1881.09V837H1800.29V781H1787.49C1777.36 798.067 1761.89 813.533 1741.09 827.4C1720.83 841.267 1691.49 848.2 1653.09 848.2ZM1676.29 776.2C1712.03 776.2 1741.36 764.733 1764.29 741.8C1787.76 718.867 1799.49 686.067 1799.49 643.4V636.2C1799.49 594.067 1788.03 561.533 1765.09 538.6C1742.16 515.667 1712.56 504.2 1676.29 504.2C1641.09 504.2 1611.76 515.667 1588.29 538.6C1565.36 561.533 1553.89 594.067 1553.89 636.2V643.4C1553.89 686.067 1565.36 718.867 1588.29 741.8C1611.76 764.733 1641.09 776.2 1676.29 776.2Z" fill="#E7E8E9"/>
+        <path d="M2341.2 837L2154 554.6L2338 277H2276.4L2121.2 519.4H2111.6L1955.6 277H1894L2078 554.6L1890.8 837H1952.4L2111.6 589.8H2121.2L2279.6 837H2341.2Z" fill="#FF7D7D"/>
+        <path d="M2369.44 150.014H2519.3C2524.82 150.014 2529.3 154.491 2529.3 160.014V370.286C2529.3 375.809 2524.82 380.286 2519.3 380.286H2369.44C2363.92 380.286 2359.44 375.809 2359.44 370.286V160.014C2359.44 154.491 2363.92 150.014 2369.44 150.014Z" stroke="#E7E8E9" stroke-width="40" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
   <div class="footer-links">
     <a href="https://github.com/Myr-Aya/GouvernAI-claude-code-plugin" target="_blank">GitHub</a>
